@@ -28,11 +28,24 @@ export async function POST(req: Request) {
     configuration.apiKey = previewToken
   }
 
+  // const res = await openai.createChatCompletion({
+  //   model: 'gpt-3.5-turbo',
+  //   messages,
+  //   temperature: 0.7,
+  //   stream: true
+  // })
+
   const res = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo',
-    messages,
-    temperature: 0.7,
-    stream: true
+    model: 'gpt-4',
+    stream: true,
+    messages: [
+      {
+        role: 'system',
+        content:
+          "You are a helpful assistant. You explain Forex trading concepts simply to intermediate traders. You don't answer questions about anything other than Forex trading and Forex trading concepts. You are especialy adapt and knowledgeable when it comes to ICT trading concepts and Smart Money Concepts"
+      },
+      ...messages
+    ]
   })
 
   const stream = OpenAIStream(res, {
